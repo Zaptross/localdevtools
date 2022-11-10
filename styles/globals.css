@@ -24,3 +24,13 @@ a {
     background: black;
   }
 }
+
+#loglist p em {
+  color: yellow;
+  font-style: normal;
+}
+
+html, body, #__next, .fill-available {
+  height: stretch;
+  width: stretch;
+}

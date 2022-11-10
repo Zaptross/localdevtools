@@ -1,15 +1,15 @@
 {
-  "name": "tools",
+  "name": "localdevtools",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 5678",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "18.11.9",
+    "@types/node": "^18.11.9",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
     "eslint": "8.26.0",
@@ -17,6 +17,12 @@
     "next": "13.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.8.4"
+    "sqlite3": "^5.1.2",
+    "typeorm": "^0.3.10",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4",
+    "typescript": "^4.8.4"
   }
 }

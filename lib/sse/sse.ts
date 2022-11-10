@@ -48,6 +48,10 @@ export function messagify(data: Stringable): string {
 }
 
 function register(client: Client) {
+  if (clients.has(client.id) && clients.get(client.id) !== client && clients.get(client.id)!.res.closed !== false) {
+    clients.get(client.id)?.res.end();
+  }
+
   clients.set(client.id, client);
 
   for (const reason of ["close", "error"]) {

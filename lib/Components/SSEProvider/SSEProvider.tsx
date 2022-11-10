@@ -1,5 +1,5 @@
-import { SSEEventType } from "../../../lib/sse/sse";
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { SSEEventType } from '../../../lib/sse/sse';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 
 export type Log = {
   type: SSEEventType.DATA;
@@ -18,14 +18,24 @@ export default function SSEProvider({ children, onData }: Props) {
     undefined
   );
 
+  const clientId = sessionStorage.getItem('clientId');
+
   useEffect(() => {
-    const es = new EventSource("/api/sse", { withCredentials: true });
+    const es = new EventSource(
+      `/api/sse${!!clientId && clientId.length ? `?id=${clientId}` : ''}`,
+      { withCredentials: true }
+    );
     setEventSource(es);
     es.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
         if (data.type === SSEEventType.DATA) {
           onData(data);
+        }
+        if (data.type === SSEEventType.MESSAGE) {
+          if (data.id) {
+            sessionStorage.setItem('clientId', data.id);
+          }
         }
       } catch (error) {
         const e = error as Error;
@@ -36,6 +46,8 @@ export default function SSEProvider({ children, onData }: Props) {
   }, [onData]);
 
   return (
-    <SSEContext.Provider value={eventSource}>{children}</SSEContext.Provider>
+    <SSEContext.Provider value={eventSource}>
+      {children}
+    </SSEContext.Provider>
   );
 }

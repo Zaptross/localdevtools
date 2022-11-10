@@ -7,7 +7,7 @@ export enum LogLevel {
 }
 
 const logLevel =
-  LogLevel[(process.env.LOG_LEVEL as keyof typeof LogLevel) || LogLevel.INFO];
+  LogLevel[(process.env.LOG_LEVEL as keyof typeof LogLevel) || "INFO"];
 
 const colouriseByLogLevel = {
   [LogLevel.DEBUG]: (content: string) => `\x1b[36m${content}\x1b[0m`,
@@ -40,7 +40,7 @@ function doLog(level: LogLevel, loggable: unknown) {
 }
 
 if (logLevel) {
-  doLog(LogLevel.INFO, `Log level set to ${LogLevel[LogLevel.INFO]}`);
+  doLog(LogLevel.INFO, `Log level set to ${LogLevel[logLevel]}`);
 }
 
 export default (() => {
